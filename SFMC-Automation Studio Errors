@@ -1,0 +1,119 @@
+# Saving the provided text content into a `.txt` file named "Automation Studio Errors.txt"
+
+content = """
+Automation Studio Errors
+
+Find out what Automation Studio error messages mean and how to resolve them. After applying the suggested action, run the activity or automation again to make sure that the error was addressed.
+
+SQL Query Activity Errors
+
+Error Text	Meaning	Suggested Action
+Query definition doesn’t exist.	The query was deleted.	Recreate the SQL Query activity.
+Query failed during execution. Error: Violation of PRIMARY KEY constraint. Can’t insert duplicate key in object '{{DE name}}'. The duplicate key value is (123456789).	The query source doesn’t have a primary key, but the destination does, so the query results in a duplicate record.	Add a primary key field in the source or remove the primary key from the destination.
+Query failed: Timeout	The query took too long to run.	
+If this timeout error doesn’t typically occur, retry the activity or automation that it's part of.
+If this error recurs, see Salesforce Help: Optimize the Query Activity.
+Query failed during execution. Error: Conversion failed when converting the nvarchar value '123ABC' to data type int.	The query source has an alphanumeric field, but the destination has a number field.	Update either the query source or the destination so the data types match.
+Query failed during execution. Error: String or binary data would be truncated.	The query source has a longer field length than the destination field.	Increase the destination field length so that it allows the same number of characters.
+Query failed during execution. Error: Invalid column name '{{column name}}'.	Either the source or the destination has a field that was renamed or deleted.	Check for columns and fields that were changed or deleted.
+Query failed during execution. Error: Invalid object name 'QueryTest_100'. Error has occurred.	Either the source or the destination has been deleted, renamed, or is otherwise unavailable.	Confirm that the source and destination data extensions exist.
+Query failed: Query not allowed	Queries aren’t available for your account.	Open a support case in Salesforce Help.
+Query failed due to system error.	A system error occurred.	Retry the activity or automation. If the error persists, open a support case in Salesforce Help.
+SQL Query activity cannot be executed at this time.	This error can occur when the database has a high volume of write activity.	Retry the activity or automation. If the error persists, open a support case in Salesforce Help.
+
+File Transfer Activity Errors
+
+Error Text	Meaning	Suggested Action
+File not found matching the pattern: {{pattern}}	The source file that the activity expected to find is missing, or no file matching the file naming pattern was found.	
+Verify that the naming pattern of the file matches the pattern configured for the activity.
+Verify that the file was dropped in the intended location.
+Invalid File Age	The timestamp on the file is invalid, or a setting in the activity configuration prevents files of a specified age from being processed.	Ensure that the file isn’t older than the defined age limit or modify the age limit setting.
+Authentication with the server failed	Server authentication failed.	
+Confirm that your FTP location is valid.
+Confirm that your external file location credentials are valid and that your session is active.
+Invalid username or password reported by server.	Server authentication failed due to an invalid username or password.	
+Confirm that your location is valid.
+Confirm that your external file location credentials are valid and that your session is active.
+Server returned an error: Permission denied	Server authentication failed due to a permission error.	
+Confirm that your location is valid and configured correctly.
+Confirm that the username provided in the file location definition has permission to the destination folder.
+The process can’t access the file '{{filename}}' because it’s being used by another process.	A file lock error occurred.	
+If this error doesn’t typically occur, retry the activity or the automation.
+If this error continues, ensure that the file isn’t being used by another process.
+There was an error connecting to the target server.	The connected host failed to respond.	Verify that your FTP host entry is configured correctly.
+The remote host forcibly closed an existing connection.	The remote host connection was lost.	Check the destination server settings to reenable the connection.
+Idle connection category	The FTP that you’re trying to transfer files to is having a connectivity issue.	Check the FTP connection.
+We can’t decrypt the file because the packet type doesn’t follow the correct standard. Encrypt the file following the RFC 4880 standard and try again.	The file contains a packet type that isn’t part of the RFC 4880 standard. For example, packet type 20 is a draft and not standardized.	Encrypt the file in compliance with RFC 4880.
+
+Data Copy or Import Activity Errors
+
+Error Text	Meaning	Suggested Action
+Import failed: File {{filename}} not found	The source file that the activity expected to find is missing, or no file matching the file naming pattern was found.	
+Verify that the naming pattern of the file matches the pattern configured for the activity.
+Verify that the file was dropped in the intended location.
+Import failed: Invalid file age	The timestamp on the file is invalid or a setting in the activity configuration prevents files of a specified age from being processed.	Ensure that the file isn’t older than the defined age limit or modify the age limit setting.
+Import failed: Invalid file source	The file source is invalid.	Enter a valid file source.
+Import failed: File location invalid	The file location is invalid.	Enter a valid file location.
+Import failed due to system error.	A system error occurred.	Retry the activity or automation. If this error persists, open a support case in Salesforce Help.
+We couldn’t import your file. Verify that your Salesforce integration is valid and try again.	Salesforce Objects and Reports couldn’t be imported because the Salesforce integration connection wasn’t established.	Verify that your Salesforce integration is functional in the Email Studio Admin settings.
+We couldn’t import your file because the last import occurred less than {{MaxFrequencyHours}} ago.	The latest import ran too recently for the import to run again.	Wait at least the MaxFrequencyHours before running the import again or shorten the MaxFrequencyHours.
+We couldn’t import your file. Verify that the destination is valid and try again.	The file location for the import doesn’t exist.	Ensure that the file location for the import still exists. Then add the file location to the import definition again.
+We couldn’t import your file. Verify that the file {{Filename}} contains data and try again.	The file for import contained no data.	Confirm that the file has data.
+We couldn’t import your file. Verify that the field mappings are valid and try again.	The import field mapping was invalid. For example, the columns are incorrect or the import fields aren’t correctly mapped.	Verify that the file’s columns match the import field mapping.
+We couldn’t connect to your external FTP. Check your credentials and try again.	The external file location was unavailable due to an authentication issue, such as an invalid username or password.	Check the credentials for the FTP File Location in Setup and validate your configuration.
+We couldn’t connect to your external FTP. Try again later.	The external file location was unavailable for connection. For example, if the service was offline.	Confirm that your FTP is online.
+
+Filter Activity Errors
+
+Error Text	Meaning	Suggested Action
+We couldn’t find an expected field in the source data extension. Make sure that the fields used by the filter definition are configured in the data extension and try again.	A field is used by the filter definition but not included in the source data extension.	Confirm that the data extension includes all data required for the filter definition.
+We couldn’t find the source data extension. Make sure that the filter definition references the correct data extension and try again.	The source data extension that was originally used in the filter definition no longer exists.	Update the filter definition to use a valid source data extension.
+We couldn’t find the destination data extension. Make sure that the filter definition references the correct data extension and try again.	The destination data extension that was originally used in the filter definition no longer exists.	Update the filter definition to use a valid destination data extension.
+We couldn't start the filter activity. A Filter Activity Instance Destination not found for DestinationObjectID [id]. Please correct the issue and try again.	The destination subscriber list or data extension is invalid or has been deleted.	Ensure the destination is a subscriber list or data extension and is active. If the destination is a deleted data extension, restore it from the Contact Builder recycle bin.
+
+Send Email Activity Errors
+
+Error Text	Meaning	Suggested Action
+Stopped because the job is in a terminal status.	A send was canceled via Email Tracking or another method before the STO send was completed.	No action needed. This message is a warning.
+
+Automatically Deactivated Automations
+
+When an automation fails repeatedly over an extended time period, the automation is deactivated to improve system stability and performance. When an automation is deactivated, you receive an email notification to the email address entered in the automation’s Notification Settings > Runtime Error or Skipped Run box. An inactive automation can’t run again until it’s fixed and reactivated. This feature is turned on for all accounts and can’t be turned off.
+"""
+
+# Write the content to a file
+file_path = '/mnt/data/Automation Studio Errors.txt'
+with open(file_path, 'w') as file:
+    file.write(content)
+
+file_path
+
+# Adding additional content to the existing file "Automation Studio Errors.txt"
+
+additional_content = """
+Salesforce Help
+Docs
+Journeys and Automations
+Automation Studio Statuses
+You can view an automation’s status from the Automation Studio interface or a related data view. Use this guide to understand what each status means.
+
+Automation Status	Meaning	Suggested Action
+Error	An error occurred when the automation ran.	View and address the error, if needed.
+BuildingError	The automation was saved with an invalid configuration.	View the automation and resolve any configuration errors.
+Building	The automation is being edited and can’t run.	The user who is editing the automation must save their changes.
+Ready	The automation is ready to run.	—
+Running	The automation is running.	—
+Paused	The automation was manually paused and won’t run again until it’s reactivated.	Reactivate the automation.
+Stopped	The automation was stopped during its most recent run.	View and address the warnings in the automation log, if needed.
+Scheduled	The automation is scheduled to run in the future.	—
+AwaitingTrigger	The automation is waiting for a file drop or trigger to start.	—
+InactiveTrigger	The automation has a file drop or trigger and won’t run again until it’s reactivated.	Reactivate the automation.
+Skipped	The automation was skipped.	Rerun the automation if needed. Otherwise, it runs the next time it’s scheduled.
+Initialized	The automation is about to run.	—
+"""
+
+# Appending the additional content to the file
+with open(file_path, 'a') as file:
+    file.write(additional_content)
+
+file_path
